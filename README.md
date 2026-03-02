@@ -59,7 +59,7 @@ This project was developed with the assistance of an AI Code Assistant (Google G
 
 ## Links
 - **Figma Design**: https://www.figma.com/design/zKWtlA2q7uzAKTQnAzVrGn/ProfileLMS?node-id=0-1&t=gy2YVfhbD3qkyKqp-1
-- **Deployed Project**: [Link to Deployment](#)
+- **Deployed Project**: https://profile-lms.netlify.app/
 
 
 
