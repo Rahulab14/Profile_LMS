@@ -1,0 +1,71 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+
+# =========================
+# Environment variables (SECRETS)
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Runtime / temp files
+# =========================
+tmp/
+temp/
+.cache/
+
+# =========================
+# OS / Editor files
+# =========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# =========================
+# Build output
+# =========================
+dist/
+build/
+out/
+
+# =========================
+# SQLite databases (LOCAL ONLY)
+# =========================
+*.sqlite
+*.sqlite3
+*.db
+
+# =========================
+# Coverage / testing
+# =========================
+coverage/
+
+# =========================
+# Lock files (OPTIONAL – choose one strategy)
+# =========================
+# If you use npm:
+# package-lock.json
+
+# If you use yarn:
+# yarn.lock
+
+# =========================
+# Misc
+# =========================
+*.pid
+*.seed
+*.tgz
