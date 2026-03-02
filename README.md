@@ -1,6 +1,13 @@
+# 💫 AI-Powered LMS Chatbot
+![Profile Page](frontend/assests/image_2026-03-02_161412604.png)
+
+
+
 # AI-Powered LMS Chatbot Project
 
 An AI-powered agent chatbot capable of updating a user profile within an LMS application, built for the KalviumLabs Forge March 2026 Project.
+
+
 
 ## Tech Stack
 - **Frontend**: React, Vite, Tailwind CSS v4, Axios
