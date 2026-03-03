@@ -32,6 +32,9 @@ const db = new sqlite3.Database(
                     dob TEXT,
                     gender TEXT,
                     email TEXT,
+                    mobile TEXT,
+                    location TEXT,
+                    profile_image TEXT,
                     FOREIGN KEY(user_id) REFERENCES users(id)
                 )`);
                 db.run(`CREATE TABLE IF NOT EXISTS education (
@@ -51,6 +54,8 @@ const db = new sqlite3.Database(
                     courses_count INTEGER DEFAULT 0,
                     modules_count INTEGER DEFAULT 0,
                     certificates_count INTEGER DEFAULT 0,
+                    course_duration TEXT,
+                    course_fee TEXT,
                     FOREIGN KEY(user_id) REFERENCES users(id)
                 )`);
             });

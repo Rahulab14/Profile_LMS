@@ -83,7 +83,7 @@ const SignupPage = () => {
         setIsSubmitting(true);
         try {
             await register(name, email, password);
-            navigate('/'); // Redirect to dashboard after successful signup and login
+            navigate('/profile'); // Redirect to profile after successful signup and login
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to register account');
         } finally {

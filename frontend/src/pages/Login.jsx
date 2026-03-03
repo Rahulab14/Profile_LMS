@@ -75,7 +75,7 @@ const LoginPage = () => {
     setIsSubmitting(true);
     try {
       await login(email, password);
-      navigate('/');
+      navigate('/profile');
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to login');
     } finally {
@@ -276,7 +276,7 @@ const LoginPage = () => {
                   </div>
                   <span className="text-[13px] font-medium text-[#5A5B5F] group-hover:text-[#1D1E20] transition-colors">Remember me</span>
                 </label>
-                
+
               </div>
 
               <button

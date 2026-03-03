@@ -19,7 +19,7 @@ const AuthenticatedLayout = ({ children }) => {
             <main className="flex-grow">
                 {children}
             </main>
-           
+
         </div>
     );
 };

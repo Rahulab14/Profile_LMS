@@ -7,7 +7,8 @@
 
 An AI-powered agent chatbot capable of updating a user profile within an LMS application, built for the KalviumLabs Forge March 2026 Project.
 
-
+## Showcase Profile
+![alt text](assests/image.png)
 
 ## Tech Stack
 - **Frontend**: React, Vite, Tailwind CSS v4, Axios

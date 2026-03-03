@@ -6,8 +6,9 @@ const { generateToken } = require('../utils/jwt');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-    const { name, email, password } = req.body;
+    let { name, email, password } = req.body;
     if (!name || !email || !password) return res.status(400).json({ error: "Name, email, and password required" });
+    email = email.toLowerCase();
 
     try {
         const salt = await bcrypt.genSalt(10);
@@ -25,9 +26,9 @@ router.post('/register', async (req, res) => {
                 const userId = this.lastID;
 
                 // Setup empty profile data for the new user, including the provided name
-                db.run(`INSERT INTO personal_info (user_id, email, name, dob, gender) VALUES (?, ?, ?, '', '')`, [userId, email, name]);
+                db.run(`INSERT INTO personal_info (user_id, email, name, dob, gender, mobile, location, profile_image) VALUES (?, ?, ?, '', '', '', '', '')`, [userId, email, name]);
                 db.run(`INSERT INTO education (user_id, board_10, percentage_10, board_12, percentage_12) VALUES (?, '', null, '', null)`, [userId]);
-                db.run(`INSERT INTO course_info (user_id, course_enrolled, application_status, courses_count, modules_count, certificates_count) VALUES (?, '', 'Pending', 3, 12, 2)`, [userId]);
+                db.run(`INSERT INTO course_info (user_id, course_enrolled, application_status, courses_count, modules_count, certificates_count, course_duration, course_fee) VALUES (?, '', 'Pending', 3, 12, 2, '', '')`, [userId]);
 
                 res.status(201).json({ message: "User registered successfully" });
             }
@@ -38,7 +39,10 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ error: "Email and password required" });
+    email = email.toLowerCase();
+
     console.log(`Login attempt for email: ${email}`);
     db.get(`SELECT * FROM users WHERE email = ?`, [email], async (err, user) => {
         if (err) {

@@ -129,7 +129,7 @@ const ProfileDashboard = () => {
     const [editingPersonal, setEditingPersonal] = useState(false);
     const [personalData, setPersonalData] = useState({ email: 'student@kalvium.com', dob: '2000-01-15', mobile: '+91 98765 43210', location: 'Chennai, TN' });
     const [tempPersonal, setTempPersonal] = useState({ ...personalData });
-    const [chatMessages, setChatMessages] = useState([{ role: 'ai', content: "Hi! I'm your AI assistant. Ask me anything about your courses or profile." }]);
+    const [chatMessages, setChatMessages] = useState([{ role: 'ai', content: "Hi! I'm your ProfileLMS AI . Ask me anything about your courses or profile." }]);
     const [chatInput, setChatInput] = useState('');
     const [chatLoading, setChatLoading] = useState(false);
     const [selectedModel, setSelectedModel] = useState('gemini');
@@ -146,12 +146,12 @@ const ProfileDashboard = () => {
     const renderMetric = (label, value, icon, vertical = false) => {
         if (vertical) {
             return (
-                <div key={label} className="flex flex-col items-center gap-1 p-3 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md w-full">
+                <div key={label} className="flex flex-col items-center gap-1 p-3 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md flex-1 w-full text-center">
                     <div className="flex items-center justify-center w-7 h-7 rounded-full bg-[#FCD34D]/20 text-[#FCD34D] border border-[#FCD34D]/30">
                         {icon}
                     </div>
-                    <span className="text-[20px] font-light text-white leading-none mt-1">{value}</span>
-                    <span className="text-[9px] font-medium text-white/40 uppercase tracking-wider">{label}</span>
+                    <span className="text-[18px] font-light text-white leading-none mt-1">{value}</span>
+                    <span className="text-[8px] font-medium text-white/40 uppercase tracking-wider">{label}</span>
                 </div>
             );
         }
@@ -175,10 +175,13 @@ const ProfileDashboard = () => {
                 const { personal_info, education, course_info } = res.data;
                 if (personal_info) {
                     setProfileName(personal_info.name || 'Student');
+                    if (personal_info.profile_image) setProfileImage(personal_info.profile_image);
                     setPersonalData(prev => ({
                         ...prev,
                         email: personal_info.email || prev.email,
-                        dob: personal_info.dob || prev.dob
+                        dob: personal_info.dob || prev.dob,
+                        mobile: personal_info.mobile || prev.mobile,
+                        location: personal_info.location || prev.location
                     }));
                 }
                 if (education) {
@@ -189,8 +192,8 @@ const ProfileDashboard = () => {
                     if (course_info.course_enrolled && course_info.application_status) {
                         setCourseData([{
                             name: course_info.course_enrolled,
-                            duration: '6 Months',
-                            fee: '₹7,000/mo',
+                            duration: course_info.course_duration || '6 Months',
+                            fee: course_info.course_fee || '₹7,000/mo',
                             status: course_info.application_status
                         }]);
                     }
@@ -425,20 +428,14 @@ const ProfileDashboard = () => {
                                 />
                             </div>
 
-                            {/* Role (read-only) */}
-                            <div className="flex flex-col gap-1">
-                                <label className="text-[9px] font-medium text-[#7A7B7F] uppercase tracking-wider">Role</label>
-                                <div className="w-full px-3 py-2 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 text-[12px] font-medium text-[#7A7B7F] cursor-not-allowed">
-                                    Student
-                                </div>
-                            </div>
+
 
                             {/* Save / Cancel */}
                             <div className="flex gap-2 mt-1">
                                 <button
                                     onClick={async () => {
                                         try {
-                                            await api.put('/profile/update', { personal_info: { name: tempProfileName } });
+                                            await api.put('/profile/update', { personal_info: { name: tempProfileName, profile_image: tempProfileImage } });
                                             setProfileName(tempProfileName);
                                             setProfileImage(tempProfileImage);
                                             setEditingProfile(false);
@@ -502,7 +499,9 @@ const ProfileDashboard = () => {
                                                         personal_info: {
                                                             dob: tempPersonal.dob,
                                                             gender: tempPersonal.gender || '',
-                                                            email: tempPersonal.email
+                                                            email: tempPersonal.email,
+                                                            mobile: tempPersonal.mobile,
+                                                            location: tempPersonal.location
                                                         }
                                                     });
                                                     setPersonalData({ ...tempPersonal });
@@ -759,17 +758,19 @@ const ProfileDashboard = () => {
                                                                 await api.put('/profile/update', {
                                                                     course_info: {
                                                                         course_enrolled: tempCourse.name,
-                                                                        application_status: tempCourse.status
+                                                                        application_status: tempCourse.status,
+                                                                        course_duration: tempCourse.duration,
+                                                                        course_fee: tempCourse.fee
                                                                     }
                                                                 });
                                                             }
 
                                                             const updatedCourses = [...courseData];
                                                             if (isAddingCourse) {
-                                                                updatedCourses.push(tempCourse);
+                                                                updatedCourses.push({ ...tempCourse });
                                                                 setCurrentCourseIndex(updatedCourses.length - 1);
                                                             } else {
-                                                                updatedCourses[currentCourseIndex] = tempCourse;
+                                                                updatedCourses[currentCourseIndex] = { ...tempCourse };
                                                             }
                                                             setCourseData(updatedCourses);
                                                         } catch (error) {
@@ -839,21 +840,21 @@ const ProfileDashboard = () => {
                     </div>
 
                     {/* Right Column */}
-                    <div className="lg:col-span-3 flex flex-col gap-6 animate-stagger-1">
+                    <div className="lg:col-span-3 flex flex-col gap-6 animate-stagger-1 h-full">
 
                         {/* Quick Stats Card */}
 
 
                         {/* AI Chatbot Card */}
-                        <div className={`flex-1 rounded-[32px] flex flex-col relative overflow-hidden transition-all duration-500 shadow-2xl ${isChatMinimized ? 'max-h-[420px] bg-transparent border-none shadow-none translate-y-0' : `${darkGlassStyle} hover:-translate-y-1`}`}>
+                        <div className={`flex-1 rounded-[32px] flex flex-col relative overflow-hidden transition-all duration-500 shadow-2xl ${isChatMinimized ? 'max-h-[420px] bg-transparent border-none shadow-none translate-y-0' : `${darkGlassStyle} hover:-translate-y-1`} h-full`}>
 
                             {isChatMinimized ? (
-                                <div className="flex flex-col items-center gap-4 py-2 animate-stagger-1 h-full justify-end">
+                                <div className="flex flex-col items-start gap-4 py-2 animate-stagger-1 h-full justify-end pl-10 mb-6">
                                     {/* Metrics Stacked Vertically when Minimized */}
-                                    <div className="flex flex-col gap-3 w-full">
-                                        {renderMetric('Courses', profileStats.courses, <icons.Monitor className="w-3.5 h-3.5" />, true)}
-                                        {renderMetric('Modules', profileStats.modules, <icons.Lightning className="w-3.5 h-3.5" />, true)}
-                                        {renderMetric('Certificates', profileStats.certificates, <icons.Check className="w-3.5 h-3.5" />, true)}
+                                    <div className="flex flex-col gap-6 w-full items-start">
+                                        {renderMetric('Courses', profileStats.courses, <icons.Monitor className="w-4 h-4" />)}
+                                        {renderMetric('Modules', profileStats.modules, <icons.Lightning className="w-4 h-4" />)}
+                                        {renderMetric('Certificates', profileStats.certificates, <icons.Check className="w-4 h-4" />)}
                                     </div>
 
                                     {/* Minimized Logo Button */}
@@ -874,7 +875,7 @@ const ProfileDashboard = () => {
                                                 <icons.Chat className="w-4 h-4 text-[#24252A]" />
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-[14px] font-semibold text-white flex items-center gap-2">AI Assistant <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span></span>
+                                                <span className="text-[14px] font-semibold text-white flex items-center gap-2"> ProfileLMS AI Assistant <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span></span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-2">
@@ -888,12 +889,12 @@ const ProfileDashboard = () => {
                                     </div>
 
                                     {/* Chat Messages */}
-                                    <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 min-h-[200px] max-h-[300px]" style={{ scrollbarWidth: 'none' }}>
+                                    <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 min-h-[200px]" style={{ scrollbarWidth: 'none' }}>
                                         {chatMessages.map((msg, i) => (
                                             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                                 {msg.role === 'ai' && (
                                                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#FCD34D] to-[#F59E0B] flex items-center justify-center mr-2 mt-1 shrink-0">
-                                                        <icons.Lightning className="w-3 h-3 text-[#24252A]" />
+                                                        <img src="/logo.png" alt="Logo" className="w-6 h-6 rounded-full" />
                                                     </div>
                                                 )}
                                                 <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-[12px] leading-relaxed ${msg.role === 'user'
@@ -920,7 +921,7 @@ const ProfileDashboard = () => {
                                     </div>
 
                                     {/* Chat Input */}
-                                    <div className="p-3 pt-0 relative z-10">
+                                    <div className="p-4 pt-4 pb-6 relative z-20 mt-auto sticky bottom-0 bg-[#24252A]/90 backdrop-blur-xl border-t border-white/5 rounded-b-[32px]">
                                         <form onSubmit={handleChatSubmit} className="flex gap-2">
                                             <input
                                                 type="text"
