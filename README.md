@@ -1,3 +1,8 @@
+# 💫 AI-Powered LMS Chatbot
+![Profile Page](frontend/assests/image_2026-03-02_161412604.png)
+
+
+
 # AI-Powered LMS Chatbot Project
 
 An AI-powered agent chatbot capable of updating a user profile within an LMS application, built for the KalviumLabs Forge March 2026 Project.
@@ -62,7 +67,7 @@ This project was developed with the assistance of an AI Code Assistant (Google G
 
 ## Links
 - **Figma Design**: https://www.figma.com/design/zKWtlA2q7uzAKTQnAzVrGn/ProfileLMS?node-id=0-1&t=gy2YVfhbD3qkyKqp-1
-- **Deployed Project**: [Link to Deployment](#)
+- **Deployed Project**: https://profile-lms.netlify.app/
 
 
 
