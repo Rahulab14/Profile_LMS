@@ -252,6 +252,7 @@ const SignupPage = () => {
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Full Name"
                                     className={inputStyle}
+                                    autoComplete="name"
                                     required
                                 />
                             </div>
@@ -264,6 +265,7 @@ const SignupPage = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Email address"
                                     className={inputStyle}
+                                    autoComplete="email"
                                     required
                                 />
                             </div>
@@ -276,6 +278,7 @@ const SignupPage = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Password"
                                     className={inputStyle}
+                                    autoComplete="new-password"
                                     required
                                 />
                                 <button
@@ -295,6 +298,7 @@ const SignupPage = () => {
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder="Confirm Password"
                                     className={inputStyle}
+                                    autoComplete="new-password"
                                     required
                                 />
                                 <button

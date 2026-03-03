@@ -246,6 +246,7 @@ const LoginPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address"
                   className={inputStyle}
+                  autoComplete="email"
                   required
                 />
               </div>
@@ -258,6 +259,7 @@ const LoginPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                   className={inputStyle}
+                  autoComplete="current-password"
                   required
                 />
                 <button
