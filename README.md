@@ -7,13 +7,16 @@
 
 An AI-powered agent chatbot capable of updating a user profile within an LMS application, built for the KalviumLabs Forge March 2026 Project.
 
-## Showcase Profile
-![alt text](assests/image.png)
+
 
 ## Tech Stack
 - **Frontend**: React, Vite, Tailwind CSS v4, Axios
 - **Backend**: Node.js, Express.js, SQLite3, JSONWebToken, Bcrypt
 - **AI Agent**: OpenAI SDK (gpt-4o-mini model strictly translating NL to SQL)
+
+## Links
+- **Deployed Project**: [Profile-lms](https://profiles-lms.vercel.app/)
+- **Figma Design**: https://www.figma.com/design/zKWtlA2q7uzAKTQnAzVrGn/ProfileLMS?node-id=0-1&t=gy2YVfhbD3qkyKqp-1
 
 ## Key Features
 1. **Authentication**: JWT-based secure email and password login.
@@ -65,9 +68,7 @@ An AI-powered agent chatbot capable of updating a user profile within an LMS app
 ## AI Assistant Usage Statement
 This project was developed with the assistance of an AI Code Assistant (Google Gemini Code Assist - Antigravity) for code review, task structuring, scaffolding React components using Tailwind CSS, and ensuring rigid adherence to the SQL generation rules in Node.js.
 
-## Links
-- **Figma Design**: https://www.figma.com/design/zKWtlA2q7uzAKTQnAzVrGn/ProfileLMS?node-id=0-1&t=gy2YVfhbD3qkyKqp-1
-- **Deployed Project**: https://profile-lms.netlify.app/
+
 
 
 
