@@ -5,7 +5,7 @@
 
 # AI-Powered LMS Chatbot Project
 
-An AI-powered agent chatbot capable of updating a user profile within an LMS application, built for the KalviumLabs Forge March 2026 Project.
+An AI-powered agent chatbot capable of updating a user profile within an LMS application.
 
 
 
